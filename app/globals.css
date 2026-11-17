@@ -15,3 +15,22 @@
 .brand .brand-icon{width:52px;height:52px;overflow:visible;flex:none;filter:drop-shadow(0 0 7px #c9a45f35)}
 .footer-brand .brand-icon{width:46px;height:46px}
 @media(max-width:650px){.brand .brand-icon{width:40px;height:40px}}
+
+/* FINAL DESIGN POLISH — clean premium DELIVIO identity */
+:root{--black:#090909;--panel:#121212;--gold:#c5a36a;--gold-light:#ead8b2;--cream:#f5f1e9;--muted:#aaa397;--line:#39332a}
+.topbar{background:#c5a36a;color:#111}
+.header{background:#090909;border-bottom-color:#c5a36a35}
+.hero{background:radial-gradient(ellipse at 76% 48%,#29231a 0%,#15130f 29%,#090909 70%)}
+.hero:before{opacity:.055;background-size:110px 110px}
+.hero h1{letter-spacing:-1px}
+.hero-art .hero-emblem{width:min(88%,430px);filter:drop-shadow(0 0 32px #c5a36a26)}
+.gold-button,.add-button,.continue-button{background:#c5a36a;color:#111;border-color:#c5a36a}
+.gold-button:hover,.add-button:not(:disabled):hover,.continue-button:hover{background:#ead8b2}
+.category-card{outline-color:#c5a36a24}
+.category-card img,.product-image img{filter:grayscale(82%) brightness(.7)}
+.category-card:hover img,.product-card:hover .product-image img{filter:grayscale(25%) brightness(.88)}
+.manifesto{background:radial-gradient(ellipse at 20% 50%,#29231a,#10100e 70%);border-color:#c5a36a30}
+.manifesto-emblem{border-color:#c5a36a45;box-shadow:0 0 0 14px #c5a36a07,0 0 65px #c5a36a10}
+.shipping-strip{background:#c5a36a}
+.footer{border-top-color:#c5a36a30}
+@media(max-width:650px){.hero{padding-top:62px}.hero-art{margin-top:38px}.hero-art .hero-emblem{width:78%}.category-card{height:260px}}
