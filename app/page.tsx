@@ -1,115 +1,39 @@
 "use client";
-
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { LanguageSwitch, useLanguage } from "./components/Language";
 
-const categories = [
-  { name: "T-SHIRTS", detail: "EVERYDAY ICONS", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85", id: "tees" },
-  { name: "HOODIES", detail: "COMFORT WITH CHARACTER", image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=900&q=85", id: "hoodies" },
-  { name: "JACKEN", detail: "MAKE AN ENTRANCE", image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=900&q=85", id: "jackets" },
-  { name: "HOSEN", detail: "THE PERFECT FIT", image: "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=900&q=85", id: "pants" },
-  { name: "CAPS", detail: "TOP OFF YOUR LOOK", image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=900&q=85", id: "caps" },
-  { name: "ACCESSOIRES", detail: "THE FINISHING TOUCH", image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=85", id: "accessories" },
-];
-
-const products = [
-  { name: "THE SIGNATURE TEE", category: "T-SHIRTS", description: "OVERSIZED / HEAVY COTTON", price: 34.90, image: categories[0].image, label: "THE ICON" },
-  { name: "AFTER HOURS HOODIE", category: "HOODIES", description: "RELAXED FIT / PREMIUM FEEL", price: 64.90, image: categories[1].image, label: "CORE COLLECTION" },
-  { name: "CITY ARMOR JACKET", category: "JACKEN", description: "MODERN STREET LAYER", price: 89.90, image: categories[2].image, label: "NEW SEASON" },
-];
-
-type CartItem = { name: string; size: string; price: number };
-
-const euro = (value: number) => value.toLocaleString("de-DE", { style: "currency", currency: "EUR" });
-
-
-function DelivioEmblem({ className = "" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 420 420" role="img" aria-label="DELIVIO D Emblem" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="delivioGold" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#f5dfa9" />
-          <stop offset=".48" stopColor="#c49a50" />
-          <stop offset="1" stopColor="#80602e" />
-        </linearGradient>
-      </defs>
-      
-      <path d="M92 70 H224 C331 70 390 128 390 245 C390 362 331 420 224 420 H92 Z" fill="none" stroke="url(#delivioGold)" strokeWidth="18" strokeLinejoin="round"/>
-      <path d="M142 118 H222 C301 118 340 159 340 245 C340 331 301 372 222 372 H142 Z" fill="none" stroke="url(#delivioGold)" strokeWidth="11"/>
-      
-    </svg>
-  );
-}
-
-export default function Home() {
-  const [cart, setCart] = useState<CartItem[]>([]);
-  const [cartOpen, setCartOpen] = useState(false);
-  const [selected, setSelected] = useState<Record<string, string>>({});
-  const [added, setAdded] = useState("");
-  useEffect(() => {
-    try { const saved = localStorage.getItem("delivio-cart"); if (saved) setCart(JSON.parse(saved)); } catch {}
-  }, []);
-  useEffect(() => { localStorage.setItem("delivio-cart", JSON.stringify(cart)); }, [cart]);
-  const subtotal = useMemo(() => cart.reduce((sum, item) => sum + item.price, 0), [cart]);
-  const shipping = cart.length > 0 ? 4.90 : 0;
-  const total = subtotal + shipping;
-  const add = (product: typeof products[number]) => {
-    const size = selected[product.name];
-    if (!size) return;
-    setCart(items => [...items, { name: product.name, size, price: product.price }]);
-    setAdded(product.name);
-    window.setTimeout(() => setAdded(""), 1500);
-  };
-
-  return (
-    <main className="site-shell">
-      <div className="topbar"><span>DELIVIO FASHION®</span><span>VERSANDPAUSCHALE DEUTSCHLAND 4,90 €</span><span>EST. 2026</span></div>
-      <header className="header">
-        <a className="brand" href="#top"><DelivioEmblem className="brand-icon" /><span className="brand-name">DELIVIO<small>FASHION®</small></span></a>
-        <nav><a href="#collections">KOLLEKTIONEN</a><a href="#edit">THE EDIT</a><a href="#story">DIE MARKE</a></nav>
-        <button className="bag-trigger" onClick={() => setCartOpen(true)}>WARENKORB <b>{cart.length.toString().padStart(2, "0")}</b></button>
-      </header>
-
-      <section className="hero" id="top">
-        <div className="hero-copy">
-          <p className="eyebrow">INDEPENDENT FASHION LABEL · STUTTGART</p>
-          <h1>OWN YOUR<br /><em>OWN</em><br />STYLE<span>.</span></h1>
-          <p className="hero-description">Klare Designs. Starke Silhouetten. Dein Stil, deine Regeln. Entdecke DELIVIO FASHION – Premium Streetwear für deinen eigenen Weg.</p>
-          <a className="gold-button" href="#collections">KOLLEKTION ENTDECKEN <span>↗</span></a>
-        </div>
-        <div className="hero-art">
-          <div className="art-glow" />
-          <DelivioEmblem className="hero-emblem" />
-          <div className="art-caption"><span>THE SIGNATURE</span><span>01 / 06</span></div>
-        </div>
-        <div className="hero-side-note">DELIVIO · EST. MMXXVI</div>
-      </section>
-
-      <div className="gold-marquee"><div>BUILT DIFFERENT <b>✦</b> OWN YOUR STYLE <b>✦</b> DELIVIO FASHION <b>✦</b> BUILT DIFFERENT <b>✦</b> OWN YOUR STYLE <b>✦</b></div></div>
-
-      <section className="section collections" id="collections">
-        <div className="section-heading"><div><p className="eyebrow">01 — FINDE DEINEN STYLE</p><h2>SHOP BY<br /><em>CATEGORY</em></h2></div><p>Sechs Kategorien.<br />Ein unverwechselbarer Auftritt.</p></div>
-        <div className="category-grid">{categories.map((category, index) => <a className="category-card" href="#edit" key={category.id}><img src={category.image} alt={category.name} /><span className="category-number">0{index + 1} / 06</span><div><small>{category.detail}</small><h3>{category.name}</h3></div><span className="category-arrow">↗</span></a>)}</div>
-      </section>
-
-      <section className="manifesto" id="story">
-        <div className="manifesto-emblem"><DelivioEmblem className="manifesto-logo" /></div>
-        <div className="manifesto-copy"><p className="eyebrow">02 — THE DELIVIO MINDSET</p><h2>NOT MADE<br /><em>TO FOLLOW.</em></h2><p>Wir folgen keinen Regeln, die nicht zu uns passen. DELIVIO steht für Selbstbewusstsein, klare Linien und den Mut, den eigenen Stil zu leben.</p><a href="#edit">DISCOVER THE BRAND ↗</a></div>
-      </section>
-
-      <section className="section edit" id="edit">
-        <div className="section-heading"><div><p className="eyebrow">03 — SELECTED PIECES</p><h2>THE<br /><em>EDIT</em></h2></div><p>Ausgewählte Designvorschauen<br />aus der DELIVIO-Welt.</p></div>
-        <div className="product-grid">{products.map(product => <article className="product-card" key={product.name}><div className="product-image"><img src={product.image} alt={product.name} /><span>{product.label}</span></div><div className="product-meta"><div><h3>{product.name}</h3><p>{product.description}</p></div><b>{euro(product.price)}</b></div><div className="product-actions"><div className="sizes">{["S", "M", "L", "XL", "XXL"].map(size => <button className={selected[product.name] === size ? "selected" : ""} onClick={() => setSelected(current => ({ ...current, [product.name]: size }))} key={size}>{size}</button>)}</div><button className="add-button" disabled={!selected[product.name]} onClick={() => add(product)}>{added === product.name ? "HINZUGEFÜGT ✓" : "IN DEN WARENKORB +"}</button></div></article>)}</div>
-        <p className="catalogue-note">Produkt- und Preisvorschauen. Die Bestellfunktion wird nach Anbindung des Produktkatalogs und der Zahlungsanbieter freigeschaltet.</p>
-      </section>
-
-      <section className="shipping-strip" id="shipping"><span>✦</span><p>VERSAND INNERHALB DEUTSCHLANDS</p><strong>4,90 €</strong><span>✦</span><p>DELIVIO FASHION®</p></section>
-
-      <footer className="footer">
-        <div className="footer-main"><div><a className="brand footer-brand" href="#top"><DelivioEmblem className="brand-icon" /><span className="brand-name">DELIVIO<small>FASHION®</small></span></a><p>OWN YOUR STYLE.</p></div><div className="footer-column"><b>DISCOVER</b><a href="#collections">Kollektionen</a><a href="#edit">The Edit</a><a href="#story">Die Marke</a></div><div className="footer-column"><b>SERVICE</b><a href="mailto:delivio.fashion@gmail.com">Kontakt</a><a href="#shipping">Versand & Lieferung</a><span>Versand DE: 4,90 €</span></div><div className="footer-column"><b>RECHTLICHES</b><a href="/impressum">Impressum</a><a href="/datenschutz">Datenschutz</a><a href="/agb">AGB</a></div></div>
-        <div className="footer-bottom"><span>© 2026 DELIVIO FASHION®</span><span>STUTTGART · GERMANY</span><a href="mailto:delivio.fashion@gmail.com">DELIVIO.FASHION@GMAIL.COM</a></div>
-      </footer>
-
-      {cartOpen && <div className="cart-overlay" onClick={() => setCartOpen(false)}><aside className="cart-panel" onClick={event => event.stopPropagation()}><div className="cart-head"><div><small>DEINE AUSWAHL</small><h2>WARENKORB ({cart.length})</h2></div><button onClick={() => setCartOpen(false)}>×</button></div>{cart.length === 0 ? <p className="empty-cart">Dein nächstes Lieblingsstück wartet hier.</p> : <>{cart.map((item, index) => <div className="cart-item" key={index}><div><b>{item.name}</b><small>GRÖSSE {item.size}</small></div><strong>{euro(item.price)}</strong><button onClick={() => setCart(items => items.filter((_, itemIndex) => itemIndex !== index))}>×</button></div>)}<div className="cart-total"><span>ZWISCHENSUMME</span><b>{euro(subtotal)}</b></div><div className="cart-total"><span>VERSAND DEUTSCHLAND</span><b>{euro(shipping)}</b></div><div className="cart-total cart-grand-total"><span>GESAMTBETRAG</span><b>{euro(total)}</b></div><p className="cart-shipping">Die Versandkosten von 4,90 € sind im Gesamtbetrag enthalten. Checkout folgt nach Anbindung der Zahlungsanbieter.</p></>}<button className="continue-button" onClick={() => setCartOpen(false)}>WEITER SHOPPEN ↗</button></aside></div>}
-    </main>
-  );
-}
+const categories=[
+{name:"T-SHIRTS",detail:"EVERYDAY ICONS",image:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85",id:"tees"},
+{name:"HOODIES",detail:"COMFORT WITH CHARACTER",image:"https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=900&q=85",id:"hoodies"},
+{name:"JACKEN",detail:"MAKE AN ENTRANCE",image:"https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=900&q=85",id:"jackets"},
+{name:"HOSEN",detail:"THE PERFECT FIT",image:"https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=900&q=85",id:"pants"},
+{name:"CAPS",detail:"TOP OFF YOUR LOOK",image:"https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=900&q=85",id:"caps"},
+{name:"ACCESSOIRES",detail:"THE FINISHING TOUCH",image:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=85",id:"accessories"}];
+const products=[
+{slug:"signature-tee",name:"THE SIGNATURE TEE",type:"OVERSIZED / HEAVY COTTON",price:34.90,tag:"THE ICON",image:categories[0].image},
+{slug:"after-hours-hoodie",name:"AFTER HOURS HOODIE",type:"RELAXED FIT / PREMIUM FEEL",price:64.90,tag:"CORE COLLECTION",image:categories[1].image},
+{slug:"city-armor-jacket",name:"CITY ARMOR JACKET",type:"MODERN STREET LAYER",price:89.90,tag:"NEW SEASON",image:categories[2].image}];
+type CartItem={name:string;size:string;price:number};
+const euro=(n:number)=>n.toLocaleString("de-DE",{style:"currency",currency:"EUR"});
+function Emblem({className=""}:{className?:string}){return <svg className={className} viewBox="0 0 420 420" role="img" aria-label="DELIVIO D Emblem"><defs><linearGradient id="goldD" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#f5dfa9"/><stop offset=".48" stopColor="#c5a36a"/><stop offset="1" stopColor="#80602e"/></linearGradient></defs><path d="M92 70 H224 C331 70 390 128 390 245 C390 362 331 420 224 420 H92 Z" fill="none" stroke="url(#goldD)" strokeWidth="18" strokeLinejoin="round"/><path d="M142 118 H222 C301 118 340 159 340 245 C340 331 301 372 222 372 H142 Z" fill="none" stroke="url(#goldD)" strokeWidth="11"/></svg>}
+export default function Home(){
+const {language}=useLanguage();const en=language==="en";
+const [cart,setCart]=useState<CartItem[]>([]);const [cartOpen,setCartOpen]=useState(false);const [email,setEmail]=useState("");const [selected,setSelected]=useState<Record<string,string>>({});const [added,setAdded]=useState("");
+useEffect(()=>{try{const v=JSON.parse(localStorage.getItem("delivio-cart")||"[]");if(Array.isArray(v))setCart(v.map((x:any)=>({...x,price:typeof x.price==="string"?Number(x.price.replace(" €","").replace(",",".")):x.price})).filter((x:any)=>Number.isFinite(x.price)))}catch{}},[]);
+useEffect(()=>{localStorage.setItem("delivio-cart",JSON.stringify(cart))},[cart]);
+const subtotal=useMemo(()=>cart.reduce((s,x)=>s+x.price,0),[cart]);const shipping=cart.length?4.9:0;
+const add=(p:typeof products[number])=>{const size=selected[p.name];if(!size)return;setCart(v=>[...v,{name:p.name,size,price:p.price}]);setAdded(p.name);window.setTimeout(()=>setAdded(""),1500)};
+return <main className="site-shell">
+<div className="topbar"><span>DELIVIO FASHION®</span><span>{en?"FLAT SHIPPING GERMANY €4.90":"VERSANDPAUSCHALE DEUTSCHLAND 4,90 €"}</span><span>EST. 2026</span></div>
+<header className="header"><a className="brand" href="#top"><Emblem className="brand-icon"/><span className="brand-name">DELIVIO<small>FASHION®</small></span></a><nav><a href="#collections">{en?"COLLECTIONS":"KOLLEKTIONEN"}</a><a href="#edit">THE EDIT</a><a href="#story">{en?"OUR STORY":"DIE MARKE"}</a></nav><div className="header-actions"><LanguageSwitch/><button className="bag-trigger" onClick={()=>setCartOpen(true)}>{en?"BAG":"WARENKORB"} <b>{cart.length.toString().padStart(2,"0")}</b></button></div></header>
+<section className="hero" id="top"><div className="hero-copy"><p className="eyebrow">INDEPENDENT FASHION LABEL · STUTTGART</p><h1>OWN YOUR<br/><em>OWN</em><br/>STYLE<span>.</span></h1><p className="hero-description">{en?"Clear designs. Strong silhouettes. Your style, your rules. Discover DELIVIO FASHION – premium streetwear for your own path.":"Klare Designs. Starke Silhouetten. Dein Stil, deine Regeln. Entdecke DELIVIO FASHION – Premium Streetwear für deinen eigenen Weg."}</p><a className="gold-button" href="#collections">{en?"DISCOVER COLLECTION":"KOLLEKTION ENTDECKEN"} <span>↗</span></a></div><div className="hero-art"><div className="art-glow"/><Emblem className="hero-emblem"/><div className="art-caption"><span>THE SIGNATURE</span><span>01 / 06</span></div></div><div className="hero-side-note">DELIVIO · EST. MMXXVI</div></section>
+<div className="gold-marquee"><div>BUILT DIFFERENT <b>✦</b> OWN YOUR STYLE <b>✦</b> DELIVIO FASHION <b>✦</b> BUILT DIFFERENT <b>✦</b> OWN YOUR STYLE <b>✦</b></div></div>
+<section className="section collections" id="collections"><div className="section-heading"><div><p className="eyebrow">01 — {en?"FIND YOUR STYLE":"FINDE DEINEN STYLE"}</p><h2>{en?"SHOP BY":"SHOP NACH"}<br/><em>{en?"CATEGORY":"KATEGORIE"}</em></h2></div><p>{en?<>Six categories.<br/>One distinctive look.</>:<>Sechs Kategorien.<br/>Ein unverwechselbarer Auftritt.</>}</p></div><div className="category-grid">{categories.map((c,i)=><a className="category-card" href="#edit" key={c.id}><img src={c.image} alt={c.name}/><span className="category-number">0{i+1} / 06</span><div><small>{c.detail}</small><h3>{c.name}</h3></div><span className="category-arrow">↗</span></a>)}</div></section>
+<section className="manifesto" id="story"><div className="manifesto-emblem"><Emblem className="manifesto-logo"/></div><div className="manifesto-copy"><p className="eyebrow">02 — THE DELIVIO MINDSET</p><h2>NOT MADE<br/><em>TO FOLLOW.</em></h2><p>{en?"We don't follow rules that don't fit us. DELIVIO stands for confidence, clear lines and the courage to live your own style.":"Wir folgen keinen Regeln, die nicht zu uns passen. DELIVIO steht für Selbstbewusstsein, klare Linien und den Mut, den eigenen Stil zu leben."}</p><a href="#edit">{en?"DISCOVER THE BRAND":"ENTDECKE DIE MARKE"} ↗</a></div></section>
+<section className="section edit" id="edit"><div className="section-heading"><div><p className="eyebrow">03 — SELECTED PIECES</p><h2>THE<br/><em>EDIT</em></h2></div><p>{en?<>Selected design previews<br/>from the DELIVIO world.</>:<>Ausgewählte Designvorschauen<br/>aus der DELIVIO-Welt.</>}</p></div><div className="product-grid">{products.map(p=><article className="product-card" key={p.slug}><Link className="product-image" href={"/product/"+p.slug}><img src={p.image} alt={p.name}/><span>{p.tag}</span><b className="product-open">↗</b></Link><div className="product-meta"><div><h3><Link href={"/product/"+p.slug}>{p.name}</Link></h3><p>{p.type}</p></div><b>{euro(p.price)}</b></div><div className="product-actions"><div className="sizes">{["S","M","L","XL","XXL"].map(s=><button className={selected[p.name]===s?"selected":""} onClick={()=>setSelected(v=>({...v,[p.name]:s}))} key={s}>{s}</button>)}</div><button className="add-button" disabled={!selected[p.name]} onClick={()=>add(p)}>{added===p.name?(en?"ADDED ✓":"HINZUGEFÜGT ✓"):(en?"ADD TO BAG +":"IN DEN WARENKORB +")}</button></div></article>)}</div><p className="catalogue-note">{en?"Product and price previews. Ordering will be enabled after the product catalogue and payment providers are connected.":"Produkt- und Preisvorschauen. Die Bestellfunktion wird nach Anbindung des Produktkatalogs und der Zahlungsanbieter freigeschaltet."}</p></section>
+<section className="shipping-strip"><span>✦</span><p>{en?"SHIPPING WITHIN GERMANY":"VERSAND INNERHALB DEUTSCHLANDS"}</p><strong>4,90 €</strong><span>✦</span><p>DELIVIO FASHION®</p></section>
+<section className="newsletter"><div><p className="eyebrow">04 — GET IN THE LOOP</p><h2>YOUR STYLE.<br/><em>YOUR STORY.</em></h2><p>{en?"New drops. Fresh energy. No noise.":"Neue Drops. Frische Energie. Ohne großes Gerede."}</p></div><form onSubmit={e=>{e.preventDefault();window.location.href="mailto:delivio.fashion@gmail.com?subject=Newsletter%20DELIVIO&body="+encodeURIComponent("Bitte nehmt diese E-Mail-Adresse in den Newsletter-Verteiler auf: "+email)}}><label htmlFor="newsletter-email">{en?"YOUR EMAIL ADDRESS":"DEINE E-MAIL-ADRESSE"}</label><div><input id="newsletter-email" type="email" required value={email} onChange={e=>setEmail(e.target.value)} placeholder="name@email.com"/><button>{en?"JOIN ↗":"ANMELDEN ↗"}</button></div><small>{en?"Submitting opens an email request.":"Mit deiner Anmeldung sendest du eine Anfrage per E-Mail."}</small></form></section>
+<footer className="footer"><div className="footer-main"><div><a className="brand footer-brand" href="#top"><Emblem className="brand-icon"/><span className="brand-name">DELIVIO<small>FASHION®</small></span></a><p>OWN YOUR STYLE.</p></div><div className="footer-column"><b>DISCOVER</b><a href="#collections">{en?"Collections":"Kollektionen"}</a><a href="#edit">The Edit</a><a href="#story">{en?"Our story":"Die Marke"}</a></div><div className="footer-column"><b>SERVICE</b><a href="mailto:delivio.fashion@gmail.com">{en?"Contact":"Kontakt"}</a><a href="#shipping">{en?"Shipping & delivery":"Versand & Lieferung"}</a><span>Versand DE: 4,90 €</span></div><div className="footer-column"><b>{en?"LEGAL":"RECHTLICHES"}</b><a href="/impressum">Impressum</a><a href="/datenschutz">Datenschutz</a><a href="/agb">AGB</a></div></div><div className="footer-bottom"><span>© 2026 DELIVIO FASHION®</span><span>STUTTGART · GERMANY</span><a href="mailto:delivio.fashion@gmail.com">DELIVIO.FASHION@GMAIL.COM</a></div></footer>
+{cartOpen&&<div className="cart-overlay" onClick={()=>setCartOpen(false)}><aside className="cart-panel" onClick={e=>e.stopPropagation()}><div className="cart-head"><div><small>{en?"YOUR SELECTION":"DEINE AUSWAHL"}</small><h2>{en?"YOUR BAG":"WARENKORB"} ({cart.length})</h2></div><button onClick={()=>setCartOpen(false)}>×</button></div>{!cart.length?<p className="empty-cart">{en?"Your next favourite piece belongs here.":"Dein nächstes Lieblingsstück wartet hier."}</p>:<>{cart.map((x,i)=><div className="cart-item" key={i}><div><b>{x.name}</b><small>{en?"SIZE":"GRÖSSE"} {x.size}</small></div><strong>{euro(x.price)}</strong><button onClick={()=>setCart(v=>v.filter((_,n)=>n!==i))}>×</button></div>)}<div className="cart-total"><span>{en?"SUBTOTAL":"ZWISCHENSUMME"}</span><b>{euro(subtotal)}</b></div><div className="cart-total"><span>{en?"SHIPPING GERMANY":"VERSAND DEUTSCHLAND"}</span><b>{euro(shipping)}</b></div><div className="cart-total cart-grand-total"><span>{en?"TOTAL":"GESAMTBETRAG"}</span><b>{euro(subtotal+shipping)}</b></div><p className="cart-shipping">{en?"German shipping of €4.90 is included in the total. Checkout will follow after payment providers are connected.":"Die Versandkosten von 4,90 € sind im Gesamtbetrag enthalten. Checkout folgt nach Anbindung der Zahlungsanbieter."}</p></>}<button className="continue-button" onClick={()=>setCartOpen(false)}>{en?"CONTINUE SHOPPING ↗":"WEITER SHOPPEN ↗"}</button></aside></div>}
+</main>}
