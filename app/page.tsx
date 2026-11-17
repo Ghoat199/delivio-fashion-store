@@ -21,6 +21,25 @@ type CartItem = { name: string; size: string; price: number };
 
 const euro = (value: number) => value.toLocaleString("de-DE", { style: "currency", currency: "EUR" });
 
+
+function DelivioEmblem({ className = "" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 420 420" role="img" aria-label="DELIVIO gekröntes D Emblem" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="delivioGold" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#f5dfa9" />
+          <stop offset=".48" stopColor="#c49a50" />
+          <stop offset="1" stopColor="#80602e" />
+        </linearGradient>
+      </defs>
+      <path d="M112 118 L144 65 L190 103 L210 42 L231 103 L276 65 L308 118 L287 145 L133 145 Z" fill="none" stroke="url(#delivioGold)" strokeWidth="12" strokeLinejoin="round"/>
+      <path d="M120 162 H235 C319 162 365 215 365 292 C365 369 315 400 235 400 H120 Z" fill="none" stroke="url(#delivioGold)" strokeWidth="19" strokeLinejoin="round"/>
+      <path d="M166 207 H231 C284 207 316 237 316 292 C316 345 283 355 231 355 H166 Z" fill="none" stroke="url(#delivioGold)" strokeWidth="12"/>
+      <path d="M82 414 H338" stroke="url(#delivioGold)" strokeWidth="5" opacity=".75"/>
+    </svg>
+  );
+}
+
 export default function Home() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
@@ -43,7 +62,7 @@ export default function Home() {
     <main className="site-shell">
       <div className="topbar"><span>DELIVIO FASHION®</span><span>VERSANDPAUSCHALE DEUTSCHLAND 4,90 €</span><span>EST. 2026</span></div>
       <header className="header">
-        <a className="brand" href="#top"><img className="brand-icon" src="https://raw.githubusercontent.com/Ghoat199/delivio-fashion/netlify-black-gold-redesign/public/delivio-d-emblem.png" alt="" /><span className="brand-name">DELIVIO<small>FASHION®</small></span></a>
+        <a className="brand" href="#top"><DelivioEmblem className="brand-icon" /><span className="brand-name">DELIVIO<small>FASHION®</small></span></a>
         <nav><a href="#collections">KOLLEKTIONEN</a><a href="#edit">THE EDIT</a><a href="#story">DIE MARKE</a></nav>
         <button className="bag-trigger" onClick={() => setCartOpen(true)}>WARENKORB <b>{cart.length.toString().padStart(2, "0")}</b></button>
       </header>
@@ -57,7 +76,7 @@ export default function Home() {
         </div>
         <div className="hero-art">
           <div className="art-glow" />
-          <img src="https://raw.githubusercontent.com/Ghoat199/delivio-fashion/netlify-black-gold-redesign/public/delivio-d-emblem.png" alt="DELIVIO FASHION gekröntes D Emblem" />
+          <DelivioEmblem className="hero-emblem" />
           <div className="art-caption"><span>THE SIGNATURE</span><span>01 / 06</span></div>
         </div>
         <div className="hero-side-note">DELIVIO · EST. MMXXVI</div>
@@ -71,7 +90,7 @@ export default function Home() {
       </section>
 
       <section className="manifesto" id="story">
-        <div className="manifesto-emblem"><img src="https://raw.githubusercontent.com/Ghoat199/delivio-fashion/netlify-black-gold-redesign/public/delivio-d-emblem.png" alt="DELIVIO gekröntes D" /></div>
+        <div className="manifesto-emblem"><DelivioEmblem className="manifesto-logo" /></div>
         <div className="manifesto-copy"><p className="eyebrow">02 — THE DELIVIO MINDSET</p><h2>NOT MADE<br /><em>TO FOLLOW.</em></h2><p>Wir folgen keinen Regeln, die nicht zu uns passen. DELIVIO steht für Selbstbewusstsein, klare Linien und den Mut, den eigenen Stil zu leben.</p><a href="#edit">DISCOVER THE BRAND ↗</a></div>
       </section>
 
@@ -84,7 +103,7 @@ export default function Home() {
       <section className="shipping-strip" id="shipping"><span>✦</span><p>VERSAND INNERHALB DEUTSCHLANDS</p><strong>4,90 €</strong><span>✦</span><p>DELIVIO FASHION®</p></section>
 
       <footer className="footer">
-        <div className="footer-main"><div><a className="brand footer-brand" href="#top"><img className="brand-icon" src="https://raw.githubusercontent.com/Ghoat199/delivio-fashion/netlify-black-gold-redesign/public/delivio-d-emblem.png" alt="" /><span className="brand-name">DELIVIO<small>FASHION®</small></span></a><p>OWN YOUR IDENTITY.</p></div><div className="footer-column"><b>DISCOVER</b><a href="#collections">Kollektionen</a><a href="#edit">The Edit</a><a href="#story">Die Marke</a></div><div className="footer-column"><b>SERVICE</b><a href="mailto:delivio.fashion@gmail.com">Kontakt</a><a href="#shipping">Versand & Lieferung</a><span>Versand DE: 4,90 €</span></div><div className="footer-column"><b>RECHTLICHES</b><a href="/impressum">Impressum</a><a href="/datenschutz">Datenschutz</a><a href="/agb">AGB</a></div></div>
+        <div className="footer-main"><div><a className="brand footer-brand" href="#top"><DelivioEmblem className="brand-icon" /><span className="brand-name">DELIVIO<small>FASHION®</small></span></a><p>OWN YOUR IDENTITY.</p></div><div className="footer-column"><b>DISCOVER</b><a href="#collections">Kollektionen</a><a href="#edit">The Edit</a><a href="#story">Die Marke</a></div><div className="footer-column"><b>SERVICE</b><a href="mailto:delivio.fashion@gmail.com">Kontakt</a><a href="#shipping">Versand & Lieferung</a><span>Versand DE: 4,90 €</span></div><div className="footer-column"><b>RECHTLICHES</b><a href="/impressum">Impressum</a><a href="/datenschutz">Datenschutz</a><a href="/agb">AGB</a></div></div>
         <div className="footer-bottom"><span>© 2026 DELIVIO FASHION®</span><span>STUTTGART · GERMANY</span><a href="mailto:delivio.fashion@gmail.com">DELIVIO.FASHION@GMAIL.COM</a></div>
       </footer>
 

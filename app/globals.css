@@ -8,3 +8,10 @@
 @media(max-width:650px){.brand-icon{width:40px;height:40px}}
 
 .manifesto-emblem img{width:72%;height:72%;object-fit:contain;mix-blend-mode:screen;filter:sepia(1) saturate(1.65) hue-rotate(350deg) contrast(1.08)}.brand-icon{width:43px;height:43px;object-fit:contain;mix-blend-mode:screen;filter:sepia(1) saturate(1.65) hue-rotate(350deg) contrast(1.08)}
+
+/* DELIVIO vector emblem: self-contained, no external logo file required */
+.hero-art .hero-emblem{position:relative;width:min(100%,480px);height:auto;z-index:1;filter:drop-shadow(0 0 24px #c9a45f38)}
+.manifesto-emblem .manifesto-logo{width:72%;height:72%;overflow:visible;filter:drop-shadow(0 0 18px #c9a45f35)}
+.brand .brand-icon{width:52px;height:52px;overflow:visible;flex:none;filter:drop-shadow(0 0 7px #c9a45f35)}
+.footer-brand .brand-icon{width:46px;height:46px}
+@media(max-width:650px){.brand .brand-icon{width:40px;height:40px}}
