@@ -49,7 +49,9 @@ export default function Home() {
     try { const saved = localStorage.getItem("delivio-cart"); if (saved) setCart(JSON.parse(saved)); } catch {}
   }, []);
   useEffect(() => { localStorage.setItem("delivio-cart", JSON.stringify(cart)); }, [cart]);
-  const total = useMemo(() => cart.reduce((sum, item) => sum + item.price, 0), [cart]);
+  const subtotal = useMemo(() => cart.reduce((sum, item) => sum + item.price, 0), [cart]);
+  const shipping = cart.length > 0 ? 4.90 : 0;
+  const total = subtotal + shipping;
   const add = (product: typeof products[number]) => {
     const size = selected[product.name];
     if (!size) return;
@@ -107,7 +109,7 @@ export default function Home() {
         <div className="footer-bottom"><span>© 2026 DELIVIO FASHION®</span><span>STUTTGART · GERMANY</span><a href="mailto:delivio.fashion@gmail.com">DELIVIO.FASHION@GMAIL.COM</a></div>
       </footer>
 
-      {cartOpen && <div className="cart-overlay" onClick={() => setCartOpen(false)}><aside className="cart-panel" onClick={event => event.stopPropagation()}><div className="cart-head"><div><small>DEINE AUSWAHL</small><h2>WARENKORB ({cart.length})</h2></div><button onClick={() => setCartOpen(false)}>×</button></div>{cart.length === 0 ? <p className="empty-cart">Dein nächstes Lieblingsstück wartet hier.</p> : <>{cart.map((item, index) => <div className="cart-item" key={index}><div><b>{item.name}</b><small>GRÖSSE {item.size}</small></div><strong>{euro(item.price)}</strong><button onClick={() => setCart(items => items.filter((_, itemIndex) => itemIndex !== index))}>×</button></div>)}<div className="cart-total"><span>ZWISCHENSUMME</span><b>{euro(total)}</b></div><p className="cart-shipping">Versand Deutschland: 4,90 €. Checkout folgt nach Anbindung der Zahlungsanbieter.</p></>}<button className="continue-button" onClick={() => setCartOpen(false)}>WEITER SHOPPEN ↗</button></aside></div>}
+      {cartOpen && <div className="cart-overlay" onClick={() => setCartOpen(false)}><aside className="cart-panel" onClick={event => event.stopPropagation()}><div className="cart-head"><div><small>DEINE AUSWAHL</small><h2>WARENKORB ({cart.length})</h2></div><button onClick={() => setCartOpen(false)}>×</button></div>{cart.length === 0 ? <p className="empty-cart">Dein nächstes Lieblingsstück wartet hier.</p> : <>{cart.map((item, index) => <div className="cart-item" key={index}><div><b>{item.name}</b><small>GRÖSSE {item.size}</small></div><strong>{euro(item.price)}</strong><button onClick={() => setCart(items => items.filter((_, itemIndex) => itemIndex !== index))}>×</button></div>)}<div className="cart-total"><span>ZWISCHENSUMME</span><b>{euro(subtotal)}</b></div><div className="cart-total"><span>VERSAND DEUTSCHLAND</span><b>{euro(shipping)}</b></div><div className="cart-total cart-grand-total"><span>GESAMTBETRAG</span><b>{euro(total)}</b></div><p className="cart-shipping">Die Versandkosten von 4,90 € sind im Gesamtbetrag enthalten. Checkout folgt nach Anbindung der Zahlungsanbieter.</p></>}<button className="continue-button" onClick={() => setCartOpen(false)}>WEITER SHOPPEN ↗</button></aside></div>}
     </main>
   );
 }
