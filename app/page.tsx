@@ -44,13 +44,13 @@ export default function Home() {
         </div>
         <div className="category-grid">
           {categories.map((category) => (
-            <a className="category-card" href="mailto:delivio.fashion@gmail.com?subject=DELIVIO%20FASHION%20-%20" key={category.number}>
+            <article className="category-card" key={category.number}>
               <img src={category.image} alt={category.name} loading="lazy" />
               <div className="card-overlay" />
               <span className="category-number">{category.number} <i>/ 06</i></span>
               <div className="category-label"><small>{category.note}</small><h3>{category.name}</h3></div>
               <span className="category-arrow">↗</span>
-            </a>
+            </article>
           ))}
         </div>
       </section>
