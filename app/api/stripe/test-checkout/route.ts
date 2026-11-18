@@ -52,6 +52,14 @@ export async function POST(request: Request) {
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items: [{ quantity: quantity as number, price: price.id }],
+      shipping_address_collection: { allowed_countries: ["DE"] },
+      shipping_options: [{
+        shipping_rate_data: {
+          type: "fixed_amount",
+          fixed_amount: { amount: 490, currency: "eur" },
+          display_name: "Versand Deutschland",
+        },
+      }],
       success_url: `${baseUrl}/stripe-test/return?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${baseUrl}/#stripe-kollektion`,
       metadata: {
