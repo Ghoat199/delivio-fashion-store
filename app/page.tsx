@@ -1,8 +1,5 @@
 "use client";
 
-import StripeCatalog from "./components/StripeCatalog";
-
-const emblem = "https://raw.githubusercontent.com/Ghoat199/delivio-fashion/netlify-final-prep/K%C3%B6nigliches%20Kristall-D%20mit%20Neon-Energie.png";
 const categories = [
   { number:"01", name:"T-SHIRTS", line:"EVERYDAY STATEMENTS", image:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1000&q=85", id:"tshirts" },
   { number:"02", name:"PULLOVER & HOODIES", line:"COMFORT. CHARACTER.", image:"https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=1000&q=85", id:"hoodies" },
@@ -16,7 +13,7 @@ export default function Home() {
   return <main className="store">
     <div className="announcement"><span>DELIVIO FASHION®</span><span>SHOP IN VORBEREITUNG · VERSAND DEUTSCHLAND 4,90 €</span><span>EST. 2026</span></div>
     <header className="site-header">
-      <a className="brand-lockup" href="#start" aria-label="DELIVIO FASHION Startseite"><img src={emblem} alt="DELIVIO FASHION Emblem"/><span>DELIVIO<small>FASHION®</small></span></a>
+      <a className="brand-lockup" href="#start" aria-label="DELIVIO FASHION Startseite"><span>DELIVIO<small>FASHION®</small></span></a>
       <nav className="main-nav"><a href="#kollektionen">KOLLEKTIONEN</a><a href="#manifest">UNSERE HALTUNG</a><a href="#service">SERVICE</a></nav>
       <div className="header-actions"><a className="header-bag" href="/warenkorb">WARENKORB ↗</a><a className="header-cta" href="#kollektionen">SHOP ENTDECKEN <span>↗</span></a></div>
     </header>
@@ -32,7 +29,7 @@ export default function Home() {
       </div>
       <div className="hero-emblem-wrap">
         <div className="emblem-halo"></div>
-        <img className="hero-emblem" src={emblem} alt="Originales gekröntes Kristall-D-Emblem von DELIVIO FASHION"/>
+        
         <span className="emblem-label">THE ORIGINAL SIGNATURE</span>
         <span className="emblem-index">D / 001</span>
       </div>
@@ -49,20 +46,18 @@ export default function Home() {
     </section>
 
     <section className="manifest-section" id="manifest">
-      <div className="manifest-art"><div className="manifest-ring"></div><img src={emblem} alt="DELIVIO FASHION Originalemblem"/><span>THE MARK / 001</span></div>
+      <div className="manifest-art"><div className="manifest-ring"></div><span>THE MARK / 001</span></div>
       <div className="manifest-copy"><p className="section-kicker">02 / THE DELIVIO MINDSET</p><h2>NOT MADE<br/><em>TO FOLLOW.</em></h2><p>Wir glauben an Individualität statt Anpassung. An klare Designs statt kurzlebiger Trends. DELIVIO FASHION steht für Selbstbewusstsein, Charakter und den Mut, den eigenen Stil zu leben.</p><a href="#service">MEHR ÜBER DELIVIO <span>↗</span></a></div>
     </section>
 
-    <StripeCatalog />
-
-    <section className="coming-section" id="coming-soon">
+        <section className="coming-section" id="coming-soon">
       <div className="coming-inner"><p className="section-kicker">03 / THE FIRST COLLECTION</p><span className="coming-symbol">D.</span><h2>YOUR NEXT<br/><em>FAVOURITE PIECE.</em></h2><p>Die Kollektion wird gerade vorbereitet. Schon bald findest du hier die ersten DELIVIO Pieces.</p><a className="outline-link" href="mailto:delivio.fashion@gmail.com?subject=DELIVIO%20FASHION%20Kollektion">FRAGEN ZUR KOLLEKTION? <span>↗</span></a></div>
     </section>
 
     <section className="service-band" id="service"><div><span>✦</span><p>VERSAND DEUTSCHLAND</p><strong>4,90 €</strong><small>Die konkrete Lieferzeit wird vor Verkaufsstart bekannt gegeben.</small></div><div><span>✦</span><p>FRAGEN? WIR SIND FÜR DICH DA</p><a href="mailto:delivio.fashion@gmail.com">DELIVIO.FASHION@GMAIL.COM ↗</a><small>0163 9744449</small></div><div><span>✦</span><p>DEIN STYLE. DEIN WEG.</p><strong>OWN YOUR IDENTITY.</strong></div></section>
 
     <footer className="site-footer">
-      <div className="footer-upper"><div className="footer-brand-block"><a className="brand-lockup" href="#start"><img src={emblem} alt="DELIVIO Emblem"/><span>DELIVIO<small>FASHION®</small></span></a><p>OWN YOUR IDENTITY.</p><small>INDEPENDENT STREETWEAR · STUTTGART</small></div><div className="footer-links"><b>EXPLORE</b><a href="#kollektionen">Kollektionen</a><a href="#manifest">Unsere Haltung</a><a href="#coming-soon">First Collection</a></div><div className="footer-links"><b>SERVICE</b><a href="mailto:delivio.fashion@gmail.com">Kontakt</a><a href="/versand">Versand & Lieferung</a><span>Deutschland · 4,90 € · Lieferzeit folgt</span></div><div className="footer-links"><b>RECHTLICHES</b><a href="/impressum">Impressum</a><a href="/datenschutz">Datenschutz</a><a href="/agb">AGB</a><a href="/widerruf">Widerruf</a><a href="/retoure">Retouren</a></div></div>
+      <div className="footer-upper"><div className="footer-brand-block"><a className="brand-lockup" href="#start"><span>DELIVIO<small>FASHION®</small></span></a><p>OWN YOUR IDENTITY.</p><small>INDEPENDENT STREETWEAR · STUTTGART</small></div><div className="footer-links"><b>EXPLORE</b><a href="#kollektionen">Kollektionen</a><a href="#manifest">Unsere Haltung</a><a href="#coming-soon">First Collection</a></div><div className="footer-links"><b>SERVICE</b><a href="mailto:delivio.fashion@gmail.com">Kontakt</a><a href="/versand">Versand & Lieferung</a><span>Deutschland · 4,90 € · Lieferzeit folgt</span></div><div className="footer-links"><b>RECHTLICHES</b><a href="/impressum">Impressum</a><a href="/datenschutz">Datenschutz</a><a href="/agb">AGB</a><a href="/widerruf">Widerruf</a><a href="/retoure">Retouren</a></div></div>
       <div className="footer-lower"><span>© 2026 DELIVIO FASHION®</span><span>STUTTGART · GERMANY</span><a href="mailto:delivio.fashion@gmail.com">DELIVIO.FASHION@GMAIL.COM</a></div>
     </footer>
   </main>;
