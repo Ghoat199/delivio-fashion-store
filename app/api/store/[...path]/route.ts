@@ -16,6 +16,10 @@ function isAllowedEndpoint(path: string, method: string): boolean {
 }
 
 async function handle(request: NextRequest, context: RouteContext) {
+  if (process.env.ENABLE_WOOCOMMERCE_STORE_API !== "true") {
+    return NextResponse.json({ error: "Der Shop ist noch nicht für Bestellungen freigeschaltet." }, { status: 503, headers: { "Cache-Control": "no-store" } });
+  }
+
   const { path } = await context.params;
   const endpoint = path.join("/");
   if (!isAllowedEndpoint(endpoint, request.method)) {
