@@ -27,12 +27,6 @@ export default function Home() {
         <a className="primary-link" href="#kollektionen">DIE KOLLEKTION ENTDECKEN <span>↗</span></a>
         <div className="hero-foot"><span>DESIGNED TO STAND OUT</span><span>01 — 06 / DELIVIO</span></div>
       </div>
-      <div className="hero-emblem-wrap">
-        <div className="emblem-halo"></div>
-        
-        <span className="emblem-label">THE ORIGINAL SIGNATURE</span>
-        <span className="emblem-index">D / 001</span>
-      </div>
       <span className="hero-vertical">DELIVIO FASHION® — EST. 2026</span>
     </section>
 
@@ -46,7 +40,6 @@ export default function Home() {
     </section>
 
     <section className="manifest-section" id="manifest">
-      <div className="manifest-art"><div className="manifest-ring"></div><span>THE MARK / 001</span></div>
       <div className="manifest-copy"><p className="section-kicker">02 / THE DELIVIO MINDSET</p><h2>NOT MADE<br/><em>TO FOLLOW.</em></h2><p>Wir glauben an Individualität statt Anpassung. An klare Designs statt kurzlebiger Trends. DELIVIO FASHION steht für Selbstbewusstsein, Charakter und den Mut, den eigenen Stil zu leben.</p><a href="#service">MEHR ÜBER DELIVIO <span>↗</span></a></div>
     </section>
 
